@@ -11,5 +11,5 @@ class UserInfo(models.Model):
     email           = models.EmailField(verbose_name='邮箱', max_length=32, blank=True, null=True)
     mobile          = models.CharField(verbose_name='手机号', max_length=11)
     college_score   = models.DecimalField(verbose_name='高考分数', max_digits=3, decimal_places=2)
-    identity        = models.CharField(verbose_name='身份', max_length=5)
+    area            = models.CharField(verbose_name='地区', max_length=5)
     particular_year = models.PositiveIntegerField(verbose_name='高考年份')

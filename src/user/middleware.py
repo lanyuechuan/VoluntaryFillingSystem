@@ -1,3 +1,5 @@
+from django.utils.deprecation import MiddlewareMixin
+
 class MyCors(MiddlewareMixin):
     """解决跨域中间件"""
     def process_response(self, request, response):
