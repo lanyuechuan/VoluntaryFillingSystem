@@ -82,8 +82,8 @@ DATABASES = {
         'OPTIONS': {
             'host': '81.69.160.104',
             'port': 3306,
-            'user':"root",
-            'passwd': "qiujun123",
+            'user':"qiujun",
+            'passwd': "123789",
             'db': "voluntary",
             'charset': 'utf8mb4',
             'init_command': 'SET default_storage_engine=InnoDB',
@@ -123,7 +123,3 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/2.2/howto/static-files/
