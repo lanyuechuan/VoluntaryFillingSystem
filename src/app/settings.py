@@ -94,14 +94,13 @@ DATABASES = {
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://81.69.160.104:6379", # 安装redis的主机的 IP 和 端口
+        "LOCATION": "redis://:redis963@81.69.160.104:6379/0", # 安装redis的主机的 IP 和 端口
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
             "CONNECTION_POOL_KWARGS": {
                 "max_connections": 1000,
                 "encoding": 'utf-8'
-            },
-            "PASSWORD": "111111111111" # redis密码
+            }
         }
     },
     # 如果你需要用连接池连上多台redis节点，以后你在做主从读写分离，就会用到这个，get_redis_connection中的参数，就是

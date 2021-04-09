@@ -10,6 +10,7 @@ from user.serializers import RegisterSerializer
 import hashlib, json
 from lib.check import Check
 from lib.utils.image_code import check_code
+from django_redis import get_redis_connection
 
 # class RegisterViewSet(viewsets.ModelViewSet):
 #     queryset = UserInfo.objects.all()
@@ -64,11 +65,16 @@ def login(request, *args, **kwargs):
 @api_view(http_method_names=['get'])
 def image_code(request):
     """生成图片验证码"""
+    request.data.get("username")
+
     from io import BytesIO
     image_object, code = check_code()
+
+    conn = get_redis_connection('default')
+
     # 写进session中
-    request.session['image_code'] = code
-    request.session.set_expiry(60)  # 60s过期
+    # request.session['image_code'] = code
+    # request.session.set_expiry(60)  # 60s过期
 
     stream = BytesIO()
     image_object.save(stream, 'png')
