@@ -42,7 +42,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    'user.middleware.MyCors',
+    'user.middleware.MyMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -151,3 +151,16 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+# jwt的token有效期（分钟）
+JWT_TIMEOUT = 5
+
+# 以下接口是白名单，不需要token就可以请求
+WHITE_REGEX_URL_LIST = [
+    "/register",
+    "/register/",
+    "/login",
+    "/login/",
+    "/admin",
+    "/admin/",
+]

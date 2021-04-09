@@ -3,7 +3,6 @@ from django.conf import settings
 from rest_framework.decorators import api_view
 from rest_framework import viewsets
 from user.models import UserInfo
-from lib.auth import JwtQueryParamsAuthentication
 from lib.jwt_auth import create_token
 from django.db.models import Q
 from user.serializers import RegisterSerializer
@@ -36,17 +35,17 @@ def register(request, *args, **kwargs):
 
     password = hashlib.sha256(password.encode('utf-8')).hexdigest()
     if not Check().check_mobile(mobile):
-        return Response({"code":1002,"error":"手机号不合规则。"})
+        return Response({"error":"手机号不合规则。"}, status=499)
     # 判断用户是否存在
     if UserInfo.objects.filter(username=username).first():
-        return Response({"code":1003,"error":"该用户名已存在，请重新输入注册信息。"})
+        return Response({"error":"该用户名已存在，请重新输入注册信息。"}, status=499)
     if UserInfo.objects.filter(email=email).first():
-        return Response({"code":1003,"error":"该邮箱已存在，请重新输入注册信息。"})
+        return Response({"error":"该邮箱已存在，请重新输入注册信息。"}, status=499)
     if UserInfo.objects.filter(mobile=mobile).first():
-        return Response({"code":1003,"error":"该手机号码已存在，请重新输入注册信息。"})
+        return Response({"error":"该手机号码已存在，请重新输入注册信息。"}, status=499)
     user = UserInfo.objects.create(username=username, password=password, email=email, mobile=mobile, college_score=college_score, area=area, particular_year=particular_year)
     register_user = {"username":username, "password":password,"email":email, "mobile":mobile}
-    return Response({"code":2000, "data":register_user, "message":"注册成功"})
+    return Response({"data":register_user}, status=499)
 
 
 @api_view(http_method_names=['post'])
@@ -54,13 +53,14 @@ def login(request, *args, **kwargs):
     data = request.data.copy()
     username = data.get("username")
     password  = data.get("password")
+    password = hashlib.sha256(password.encode('utf-8')).hexdigest()
     # 可以使用手机号，邮箱，姓名登录
     user_obj = UserInfo.objects.filter(Q(mobile=username,password=password) | Q(email=username,password=password) | Q(username=username, password=password)).first()
     if not user_obj:
-        return Response({"code":1000,"error":"用户名或密码错误。"})
+        return Response({"error":"用户名或密码错误。"}, status=499)
 
     token = create_token({"id":user_obj.id,"name":user_obj.username})
-    return Response({"code": 1001, "data": token})
+    return Response({"data": token}, status=200)
 
 @api_view(http_method_names=['get'])
 def image_code(request):

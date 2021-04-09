@@ -24,6 +24,6 @@ from user import views
 urlpatterns = [
     # re_path(r'', include(router.urls),name='register'),
     path('admin/', admin.site.urls),
-    path('user/login/', views.login),
-    path('user/register/', views.register),
+    path('login/', views.login),
+    path('register/', views.register),
 ]

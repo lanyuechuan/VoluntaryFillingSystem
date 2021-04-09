@@ -21,4 +21,4 @@ class UserInfo(models.Model):
     college_score   = models.CharField(verbose_name='高考分数', max_length=6)
     area            = models.CharField(verbose_name='地区', max_length=5)
     particular_year = models.PositiveIntegerField(verbose_name='高考年份')
-    user_role       = models.IntegerField(max_length=1, choices=USER_ROLE, default=0)
+    user_role       = models.IntegerField(choices=USER_ROLE, default=0)
