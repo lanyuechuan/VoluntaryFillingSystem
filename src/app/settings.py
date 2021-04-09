@@ -75,7 +75,6 @@ WSGI_APPLICATION = 'app.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/2.2/ref/settings/#databases
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
@@ -89,6 +88,36 @@ DATABASES = {
             'init_command': 'SET default_storage_engine=InnoDB',
         },
     }
+}
+
+# 缓存
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://81.69.160.104:6379", # 安装redis的主机的 IP 和 端口
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+            "CONNECTION_POOL_KWARGS": {
+                "max_connections": 1000,
+                "encoding": 'utf-8'
+            },
+            "PASSWORD": "111111111111" # redis密码
+        }
+    },
+    # 如果你需要用连接池连上多台redis节点，以后你在做主从读写分离，就会用到这个，get_redis_connection中的参数，就是
+    # 按照这个redis名，default或者master在视图中就能直接使用这里连接好的
+    #  "master": {
+    #     "BACKEND": "django_redis.cache.RedisCache",
+    #     "LOCATION": "redis://1.1.1.1:6379", # 安装redis的主机的 IP 和 端口
+    #     "OPTIONS": {
+    #         "CLIENT_CLASS": "django_redis.client.DefaultClient",
+    #         "CONNECTION_POOL_KWARGS": {
+    #             "max_connections": 1000,
+    #             "encoding": 'utf-8'
+    #         },
+    #         "PASSWORD": "password" # redis密码
+    #     }
+    # }
 }
 
 
