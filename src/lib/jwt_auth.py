@@ -13,5 +13,5 @@ def create_token(payload, timeout=settings.JWT_TIMEOUT):
     }
     # 构造payload
     payload['exp'] = datetime.datetime.utcnow() + datetime.timedelta(minutes=timeout)  # 超时时间自定义
-    token = jwt.encode(payload=payload, key=SALT, algorithm="HS256", headers=headers).decode('utf-8')
+    token = jwt.JWT().encode(payload=payload, key=SALT, alg="HS256", optional_headers=headers).decode('utf-8')
     return token

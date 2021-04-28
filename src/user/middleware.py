@@ -33,7 +33,4 @@ class MyMiddleware(MiddlewareMixin):
         request.token = token
         return
 
-    def process_response(self,request,response):
-        """解决跨域中间件"""
-        pass
     
