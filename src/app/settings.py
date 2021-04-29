@@ -10,7 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.2/ref/settings/
 """
 
-import os
+import os, datetime
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -36,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    # 'django.contrib.staticfiles',
+    'django.contrib.staticfiles',
     "user",
     # 'corsheaders', # 允许跨域访问
 ]
@@ -153,7 +153,7 @@ USE_L10N = True
 USE_TZ = True
 
 # jwt的token有效期（分钟）
-JWT_TIMEOUT = 5
+JWT_TIMEOUT = 30
 
 # 以下接口是白名单，不需要token就可以请求
 WHITE_REGEX_URL_LIST = [
@@ -164,3 +164,6 @@ WHITE_REGEX_URL_LIST = [
     "/admin",
     "/admin/",
 ]
+
+# 为了使用django后台
+STATIC_URL = "/static/"

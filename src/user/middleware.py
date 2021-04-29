@@ -18,18 +18,18 @@ class MyMiddleware(MiddlewareMixin):
         # 3、验证第三段的合法性
 
         SALT = settings.SECRET_KEY
-        try:
+        # try:
             # 传入True，代表但凡payload有返回值，就表示校验成功
-            payload = jwt.decode(token, SALT, True)
-        except exceptions.ExpiredSignatureError:
-            return Response({"message": "token已失效"}, status=499)
-        except jwt.DecodeError:
-            return Response({"message": "token认证失败"}, status=499)
-        except jwt.InvalidTokenError:
-            return Response({"message": "非法的token"}, status=499)
+        # payload = jwt.decode(token, SALT, True)
+        # except exceptions.ExpiredSignatureError:
+        #     return Response({"message": "token已失效"}, status=499)
+        # except jwt.DecodeError:
+        #     return Response({"message": "token认证失败"}, status=499)
+        # except jwt.InvalidTokenError:
+        #     return Response({"message": "非法的token"}, status=499)
 
         # jwt的token验证通过，这个payload终就是user_id和username
-        request.payload = payload
+        # request.payload = payload
         request.token = token
         return
 

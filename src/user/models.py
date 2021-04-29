@@ -20,5 +20,13 @@ class UserInfo(models.Model):
     mobile          = models.CharField(verbose_name='手机号', max_length=11)
     college_score   = models.CharField(verbose_name='高考分数', max_length=6)
     area            = models.CharField(verbose_name='地区', max_length=5)
-    particular_year = models.PositiveIntegerField(verbose_name='高考年份')
-    user_role       = models.IntegerField(choices=USER_ROLE, default=0)
+    particular_year = models.PositiveIntegerField(verbose_name='高考年份')  
+    user_role       = models.IntegerField(verbose_name='用户权限', choices=USER_ROLE, default=0)
+
+    class Meta:
+        db_table = 'user_user'
+        verbose_name = '用户表'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return '《%s》' % self.username    

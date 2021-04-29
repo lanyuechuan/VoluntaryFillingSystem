@@ -10,6 +10,7 @@ import hashlib, json
 from lib.check import Check
 from lib.utils.image_code import check_code
 from django_redis import get_redis_connection
+from django.shortcuts import HttpResponse
 
 # class RegisterViewSet(viewsets.ModelViewSet):
 #     queryset = UserInfo.objects.all()
@@ -60,7 +61,7 @@ def login(request, *args, **kwargs):
         return Response({"error":"用户名或密码错误。"}, status=499)
 
     token = create_token({"id":user_obj.id,"name":user_obj.username})
-    return Response({"data": token}, status=200)
+    return Response({"access_token": token}, status=200)
 
 @api_view(http_method_names=['get'])
 def image_code(request):
