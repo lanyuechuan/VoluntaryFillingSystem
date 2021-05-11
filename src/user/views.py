@@ -2,7 +2,7 @@ from rest_framework.response import Response
 from django.conf import settings
 from rest_framework.decorators import api_view
 from rest_framework import viewsets
-from user.models import UserInfo
+from user.models import User
 from lib.jwt_auth import create_token
 from django.db.models import Q
 from user.serializers import RegisterSerializer
@@ -13,7 +13,7 @@ from django_redis import get_redis_connection
 from django.shortcuts import HttpResponse
 
 # class RegisterViewSet(viewsets.ModelViewSet):
-#     queryset = UserInfo.objects.all()
+#     queryset = User.objects.all()
 #     serializer_class = RegisterSerializer
 
 #     def create(self, request, *args, **kwargs):
@@ -38,15 +38,15 @@ def register(request, *args, **kwargs):
     if not Check().check_mobile(mobile):
         return Response({"error":"手机号不合规则。"}, status=499)
     # 判断用户是否存在
-    if UserInfo.objects.filter(username=username).first():
+    if User.objects.filter(username=username).first():
         return Response({"error":"该用户名已存在，请重新输入注册信息。"}, status=499)
-    if UserInfo.objects.filter(email=email).first():
+    if User.objects.filter(email=email).first():
         return Response({"error":"该邮箱已存在，请重新输入注册信息。"}, status=499)
-    if UserInfo.objects.filter(mobile=mobile).first():
+    if User.objects.filter(mobile=mobile).first():
         return Response({"error":"该手机号码已存在，请重新输入注册信息。"}, status=499)
-    user = UserInfo.objects.create(username=username, password=password, email=email, mobile=mobile, college_score=college_score, area=area, particular_year=particular_year)
-    register_user = {"username":username, "password":password,"email":email, "mobile":mobile}
-    return Response({"data":register_user}, status=499)
+    user = User.objects.create(username=username, password=password, email=email, mobile=mobile, college_score=college_score, area=area, particular_year=particular_year)
+    register_user = {"username":username, "password":password, "email":email, "mobile":mobile}
+    return Response({"data":register_user}, status=200)
 
 
 @api_view(http_method_names=['post'])
@@ -56,12 +56,12 @@ def login(request, *args, **kwargs):
     password  = data.get("password")
     password = hashlib.sha256(password.encode('utf-8')).hexdigest()
     # 可以使用手机号，邮箱，姓名登录
-    user_obj = UserInfo.objects.filter(Q(mobile=username,password=password) | Q(email=username,password=password) | Q(username=username, password=password)).first()
+    user_obj = User.objects.filter(Q(mobile=username,password=password) | Q(email=username,password=password) | Q(username=username, password=password)).first()
     if not user_obj:
         return Response({"error":"用户名或密码错误。"}, status=499)
 
     token = create_token({"id":user_obj.id,"name":user_obj.username})
-    return Response({"access_token": token}, status=200)
+    return Response({"token": token}, status=200)
 
 @api_view(http_method_names=['get'])
 def image_code(request):

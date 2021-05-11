@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from user.models import UserInfo
+from user.models import User
 from lib.check import Check
 from lib.objectid import create_objectid
 import hashlib
@@ -34,5 +34,5 @@ class RegisterSerializer(serializers.ModelSerializer):
 
 
     class Meta:
-         model = UserInfo
+         model = User
          fields = '__all__'

@@ -38,10 +38,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     "user",
-    # 'corsheaders', # 允许跨域访问
+    'corsheaders', # 允许跨域访问
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'user.middleware.MyMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -79,11 +80,11 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
-            'host': '81.69.160.104',
+            'host': '127.0.0.1',
             'port': 3306,
-            'user':"qiujun",
-            'passwd': "123789",
-            'db': "voluntary",
+            'user':"root",
+            'passwd': "123456",
+            'db': "volun",
             'charset': 'utf8mb4',
             'init_command': 'SET default_storage_engine=InnoDB',
         },
@@ -165,5 +166,14 @@ WHITE_REGEX_URL_LIST = [
     "/admin/",
 ]
 
-# 为了使用django后台
+# 使用django后台管理
 STATIC_URL = "/static/"
+
+# 添加允许跨域的前台服务器
+CORS_ORIGIN_WHITELIST = {
+    '127.0.0.1:8080',
+    'localhost:8080',
+}
+
+# 允许后端在跨域访问中对cookie进行操作
+CORS_ALLOW_CREDENTIALS = True
