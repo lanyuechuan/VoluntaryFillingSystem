@@ -177,3 +177,20 @@ CORS_ORIGIN_WHITELIST = {
 
 # 允许后端在跨域访问中对cookie进行操作
 CORS_ALLOW_CREDENTIALS = True
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        # 引入JWT认证机制，当客户端将jwt token传递给服务器之后
+        # 此认证机制会自动校验jwt token的有效性，无效会直接返回401(未认证错误)
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ),
+}
+
+# JWT扩展配置
+JWT_AUTH = {
+    # 设置jwt token的有效时间
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=3600),
+}

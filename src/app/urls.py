@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 from user import views
+from rest_framework_jwt.views import obtain_jwt_token
 # from rest_framework import routers
 
 # router = routers.DefaultRouter()
@@ -25,5 +26,6 @@ urlpatterns = [
     # re_path(r'', include(router.urls),name='register'),
     path('admin/', admin.site.urls),
     path('login/', views.login),
+    path('authorizations/', obtain_jwt_token),
     path('register/', views.register),
 ]

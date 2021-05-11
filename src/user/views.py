@@ -63,6 +63,13 @@ def login(request, *args, **kwargs):
     token = create_token({"id":user_obj.id,"name":user_obj.username})
     return Response({"token": token}, status=200)
 
+# @api_view(http_method_names=['get'])
+# def order(request, *args, **kwargs):
+#     """验证token"""
+#     data = request.query_params.copy()
+#     token = data.get("token")
+
+
 @api_view(http_method_names=['get'])
 def image_code(request):
     """生成图片验证码"""
